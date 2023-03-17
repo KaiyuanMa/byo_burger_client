@@ -32,13 +32,15 @@
 	});
 </script>
 
-<div class="flex justify-start mx-auto flex-col w-200 pt-10">
+<div class="mx-auto flex w-200 flex-col justify-start pt-10">
 	<div class="flex justify-between px-2">
-		<h2 class="text-xl font-extrabold">SELECT {ingredientType.toUpperCase()}</h2>
+		<h2 class="text-xl font-extrabold">
+			SELECT {ingredientType.toUpperCase()}
+		</h2>
 		<div
 			class="{isOptional
 				? 'bg-gray-400'
-				: 'bg-red-500'} p-1 text-xs font-bold text-white flex justify-center items-center"
+				: 'bg-red-500'} flex items-center justify-center p-1 text-xs font-bold text-white"
 		>
 			{isOptional ? 'OPTIONAL' : 'REQUIRED'}
 		</div>
@@ -50,11 +52,11 @@
 			? '1'
 			: ingredientOptions.length}
 	</p>
-	<div class="flex justify-start align-center flex-wrap w-full">
+	<div class="align-center flex w-full flex-wrap justify-start">
 		{#if inputType === 'radio'}
 			{#each ingredientOptions as { id, name }}
-				<div class="w-1/4 h-40 p-2">
-					<label class="flex justify-center align-center w-full h-full" for={ingredientType + id}
+				<div class="h-40 w-1/4 p-2">
+					<label class="align-center flex h-full w-full justify-center" for={ingredientType + id}
 						><input
 							id={ingredientType + id}
 							class="h-0 w-0"
@@ -64,14 +66,14 @@
 							value={name}
 						/>
 						<div
-							class="relative bg-white flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {selectedIngredient ===
+							class="relative flex h-full w-full cursor-pointer items-center justify-center border-2 bg-white text-sm font-extrabold text-red-500 transition-all duration-75 {selectedIngredient ===
 							name
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
 						>
 							{name.replaceAll('_', ' ').toUpperCase()}
 							<i
-								class="transition-all duration-200 fa-solid fa-circle-check absolute top-2 right-2 text-xl {selectedIngredient ===
+								class="fa-solid fa-circle-check absolute top-2 right-2 text-xl transition-all duration-200 {selectedIngredient ===
 								name
 									? 'opacity-100'
 									: 'opacity-0'}"
@@ -83,8 +85,8 @@
 			<!-- Check if allow multiple input  -->
 		{:else if inputType === 'checkbox'}
 			{#each ingredientOptions as { id, isChecked, name }}
-				<div class="w-1/4 h-40 p-2">
-					<label class="flex justify-center align-center w-full h-full"
+				<div class="h-40 w-1/4 p-2">
+					<label class="align-center flex h-full w-full justify-center"
 						><input
 							type="checkbox"
 							class="h-0 w-0"
@@ -93,13 +95,13 @@
 							value={name}
 						/>
 						<div
-							class="relative bg-white flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {isChecked
+							class="relative flex h-full w-full cursor-pointer items-center justify-center border-2 bg-white text-sm font-extrabold text-red-500 transition-all duration-75 {isChecked
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
 						>
 							{name.replaceAll('_', ' ').toUpperCase()}
 							<i
-								class="transition-all duration-200 fa-solid fa-circle-check absolute top-2 right-2 text-xl {isChecked
+								class="fa-solid fa-circle-check absolute top-2 right-2 text-xl transition-all duration-200 {isChecked
 									? 'opacity-100'
 									: 'opacity-0'}"
 							/>
