@@ -34,19 +34,28 @@
 	};
 </script>
 
-<div class="ingredient-options">
+<header class="flex justify-center items-center h-20 text-red-600 text-4xl font-extrabold">
+	BYO BURGER
+</header>
+<h1
+	class="flex justify-center items-center h-72 bg-red-600 text-white text-6xl font-extrabold h-20"
+>
+	BUILD YOUR OWN
+</h1>
+<div>
 	{#each Object.entries(ingredients) as ingredientArray (ingredientArray[0])}
 		<IngredientSelect
 			inputType={ingredientArray[0] === 'toppings' || ingredientArray[0] === 'sauces'
 				? 'checkbox'
 				: 'radio'}
-			isOptional={ingredientArray[0] === 'bun' || ingredientArray[0] === 'patty' ? 'false' : 'true'}
+			isOptional={ingredientArray[0] === 'bun' || ingredientArray[0] === 'patty' ? false : true}
 			{ingredientArray}
 			on:selectionChanged={handelSelection}
 		/>
 	{/each}
 </div>
-<button on:click={handelSubmit} disabled={burger.bun === '' || burger.patty === ''}>Order</button>
+<button on:click={handelSubmit} disabled={!burger.bun || !burger.patty}>Order</button>
+<button on:click={() => console.log(burger)}>Log burger</button>
 
 <style>
 	.ingredient-options {
