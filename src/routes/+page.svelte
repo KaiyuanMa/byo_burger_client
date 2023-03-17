@@ -55,7 +55,7 @@
 >
 	BUILD YOUR OWN
 </h1>
-<div>
+<div class="bg-gray-100">
 	{#each Object.entries(ingredients) as ingredientArray (ingredientArray[0])}
 		<IngredientSelect
 			inputType={ingredientArray[0] === 'toppings' || ingredientArray[0] === 'sauces'

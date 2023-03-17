@@ -32,7 +32,7 @@
 	});
 </script>
 
-<div class="flex justify-start mx-auto flex-col w-200 mt-10">
+<div class="flex justify-start mx-auto flex-col w-200 pt-10">
 	<div class="flex justify-between px-2">
 		<h2 class="text-xl font-extrabold">SELECT {ingredientType.toUpperCase()}</h2>
 		<div
@@ -44,7 +44,9 @@
 		</div>
 	</div>
 	<p class="px-2 text-xs">
-		Select up to :{ingredientType === 'bun' || ingredientType === 'patty'
+		Select up to : {ingredientType === 'bun' ||
+		ingredientType === 'patty' ||
+		ingredientType === 'cheese'
 			? '1'
 			: ingredientOptions.length}
 	</p>
@@ -62,7 +64,7 @@
 							value={name}
 						/>
 						<div
-							class="relative flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {selectedIngredient ===
+							class="relative bg-white flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {selectedIngredient ===
 							name
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
@@ -91,7 +93,7 @@
 							value={name}
 						/>
 						<div
-							class="relative flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {isChecked
+							class="relative bg-white flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {isChecked
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
 						>
