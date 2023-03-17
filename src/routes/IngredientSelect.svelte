@@ -26,7 +26,6 @@
 		}
 	}
 
-	$: console.log(ingredientArray);
 	$: dispatch('selectionChanged', {
 		type: ingredientType,
 		selection: selectedIngredient
@@ -63,12 +62,18 @@
 							value={name}
 						/>
 						<div
-							class="flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {selectedIngredient ===
+							class="relative flex justify-center items-center transition-all duration-75 text-red-500 text-sm font-extrabold border-2 h-full w-full {selectedIngredient ===
 							name
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
 						>
 							{name.replaceAll('_', ' ').toUpperCase()}
+							<i
+								class="transition-all duration-200 fa-solid fa-circle-check absolute top-2 right-2 text-xl {selectedIngredient ===
+								name
+									? 'opacity-100'
+									: 'opacity-0'}"
+							/>
 						</div></label
 					>
 				</div>

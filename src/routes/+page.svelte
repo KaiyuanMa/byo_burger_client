@@ -18,9 +18,22 @@
 	});
 
 	const fetchIngredients = async () => {
-		const response = await apiGetIngredients();
-		ingredients = response.data;
-		console.log(response.data);
+		const { data } = await apiGetIngredients();
+		function isRequired(key) {
+			return ['bun', 'patty'].includes(key);
+		}
+		const sortedKeys = Object.keys(data).sort((a, b) => {
+			if (isRequired(a) && !isRequired(b)) {
+				return -1;
+			} else if (!isRequired(a) && isRequired(b)) {
+				return 1;
+			} else {
+				return a.localeCompare(b);
+			}
+		});
+		for (const key of sortedKeys) {
+			ingredients[key] = data[key];
+		}
 	};
 
 	const handelSelection = (event) => {
