@@ -1,22 +1,13 @@
 <script>
-	import { onMount } from 'svelte';
-	import { each } from 'svelte/internal';
+	import { onMount, afterUpdate } from 'svelte';
 	import { apiGetIngredients, apiPostBurgers } from '../api';
-	import IngredientSelect from './IngredientSelect.svelte';
+	import IngredientSelect from '../components/IngredientSelect.svelte';
+	import SideBar from '../components/SideBar.svelte';
 	let ingredients = {};
-	let bag = [
-		{
-			id: 'burger-1',
-			bun: 'whole_wheat',
-			cheese: 'american',
-			patty: 'black_bean',
-			sauces: ['mustard', 'ketchup', 'mayo', 'barbecue'],
-			toppings: ['lettuce', 'tomato', 'grilled_onions', 'bacon']
-		}
-	];
+	let reset = false;
+	let bag = [];
 	let quantity = 1;
-	let isBagHidden = false;
-	let selectedIngredient;
+	let isBagHidden = true;
 	//Copy all keys to burger for later verification before submit
 	$: burger = Object.keys(ingredients).reduce((acc, key) => {
 		if (key === 'toppings' || key === 'sauces') {
@@ -58,38 +49,49 @@
 
 	const handleAddToBag = () => {
 		let dummy = bag;
-		console.log(burger);
 		let id = bag.length + 1;
 		for (let i = 0; i < quantity; i++) {
 			dummy.push({ id: `burger-${id}`, ...burger });
 			id++;
 		}
 		bag = dummy;
-		selectedIngredient = null;
+		ingredients = ingredients;
 		isBagHidden = false;
+		reset = true;
 	};
+	afterUpdate(() => {
+		reset = false;
+	});
 
 	const handleRemoveFromBag = (id) => {
-		console.log(id);
 		let dummy = bag;
 		bag = dummy.filter((burger) => burger.id !== id);
-		console.log(dummy);
-		console.log(bag);
 	};
 
 	const handleSubmit = async () => {
-		const response = await apiPostBurgers(burger);
-		console.log(response);
+		const promises = bag.map(async (burger) => {
+			try {
+				const response = await apiPostBurgers(burger);
+			} catch (error) {
+				console.error(`POST request for item ${item} failed:`, error.message);
+			}
+		});
+
+		await Promise.all(promises);
+		console.log('All POST requests have been completed.');
+		bag = [];
 	};
 </script>
 
-<button on:click={() => console.log(bag)}>logBag</button>
-<div class="pb-20">
-	<header class="flex h-20 items-center justify-center text-4xl font-extrabold text-red-600">
+<div class="bg-gray-100 pb-20">
+	<header
+		class="relative flex h-20 items-center justify-center bg-white text-4xl font-extrabold text-red-600"
+	>
 		BYO BURGER
-		<button on:click={() => (isBagHidden = !isBagHidden)}
-			><i class="fa-sharp fa-solid fa-bag-shopping" /></button
-		>
+		<span class="absolute right-3 top-2 text-lg">{bag.length >= 1 ? bag.length : ''}</span>
+		<button class="absolute right-5 my-auto" on:click={() => (isBagHidden = !isBagHidden)}
+			><i class="fa-sharp fa-regular fa-bag-shopping" />
+		</button>
 	</header>
 	<h1
 		class="flex h-72 h-20 items-center justify-center bg-red-600 text-6xl font-extrabold text-white"
@@ -104,7 +106,7 @@
 					: 'radio'}
 				isOptional={ingredientArray[0] === 'bun' || ingredientArray[0] === 'patty' ? false : true}
 				{ingredientArray}
-				{selectedIngredient}
+				{reset}
 				on:selectionChanged={handleSelection}
 			/>
 		{/each}
@@ -135,60 +137,7 @@
 			disabled={!burger.bun || !burger.patty}>ADD TO BAG</button
 		>
 	</div>
-	<div
-		class="fixed right-0 top-0 h-[calc(100%-5rem)] w-80 border-l-2 bg-white transition-all duration-300 {isBagHidden
-			? 'translate-x-full'
-			: ''}"
-	>
-		<div class="mr-3 flex h-16 justify-end">
-			<button
-				class="mt-3 text-2xl font-bold hover:rotate-90"
-				on:click={() => (isBagHidden = !isBagHidden)}
-				><i class="fa-solid fa-xmark-large p-2 transition-all hover:rotate-90" /></button
-			>
-		</div>
-		{#if !bag[0]}
-			<p>Your bag is empty</p>
-		{:else}
-			<div class="flex h-[calc(100%-4rem)] flex-col gap-2 overflow-y-scroll">
-				{#each bag as burger, index}
-					<div class="mx-3 flex flex-col border-2 p-2">
-						<div class="flex items-center justify-between">
-							<h1 class="text-lg font-bold text-red-500">
-								{burger.id.replaceAll('-', ' ').toUpperCase()}
-							</h1>
-							<button on:click={() => handleRemoveFromBag(burger.id)}
-								><i class="fa-solid fa-trash p-1 transition-all hover:text-red-500" /></button
-							>
-						</div>
-
-						<div>
-							{#each Object.keys(burger) as key}
-								{#if !(burger[key] === '' || burger[key].length == 0 || key === 'id')}
-									<div class="flex flex-wrap gap-x-1 gap-y-0">
-										<p class="font-bold">{key.toUpperCase()}:</p>
-										{#if typeof burger[key] === 'string'}
-											<span>{burger[key].replaceAll('_', ' ')}</span>
-										{:else}
-											{#each burger[key] as ingredient, index}
-												{#if index === burger[key].length - 1}
-													<span>{ingredient.replaceAll('_', ' ')}</span>
-												{:else}
-													<span>{ingredient.replaceAll('_', ' ')},</span>
-												{/if}
-											{/each}
-										{/if}
-									</div>
-								{/if}
-							{/each}
-						</div>
-					</div>
-				{/each}
-			</div>
-		{/if}
-	</div>
-	<button on:click={handleSubmit} disabled={!burger.bun || !burger.patty}>Order</button>
-	<button on:click={() => console.log(burger)}>Log burger</button>
+	<SideBar bind:isBagHidden bind:bag {handleRemoveFromBag} {handleSubmit} />
 </div>
 
 <style>

@@ -1,12 +1,23 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, afterUpdate } from 'svelte';
 	const dispatch = createEventDispatcher();
 	export let inputType;
 	export let ingredientArray;
 	export let isOptional;
-	export let selectedIngredient;
-
+	export let reset;
+	let selectedIngredient;
 	$: ingredientType = ingredientArray[0];
+	$: if (reset) {
+		handelReset();
+	}
+	function handelReset() {
+		if (inputType === 'radio') {
+			selectedIngredient = '';
+		} else if (inputType === 'checkbox') {
+			selectedIngredient = [];
+			ingredientOptions = createIngredientOptions(ingredientArray[1]);
+		}
+	}
 
 	let ingredientOptions = createIngredientOptions(ingredientArray[1]);
 
