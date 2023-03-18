@@ -4,7 +4,7 @@
 	export let inputType;
 	export let ingredientArray;
 	export let isOptional;
-	let selectedIngredient;
+	export let selectedIngredient;
 
 	$: ingredientType = ingredientArray[0];
 
@@ -66,8 +66,8 @@
 							value={name}
 						/>
 						<div
-							class="relative flex h-full w-full cursor-pointer items-center justify-center border-2 bg-white text-sm font-extrabold text-red-500 transition-all duration-75 {selectedIngredient ===
-							name
+							class="relative flex h-full w-full cursor-pointer items-center justify-center border-2 bg-white text-sm font-extrabold 
+              text-red-500 shadow-xl transition-all duration-75 {selectedIngredient === name
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
 						>
@@ -95,7 +95,7 @@
 							value={name}
 						/>
 						<div
-							class="relative flex h-full w-full cursor-pointer items-center justify-center border-2 bg-white text-sm font-extrabold text-red-500 transition-all duration-75 {isChecked
+							class="relative flex h-full w-full cursor-pointer items-center justify-center border-2 bg-white text-sm font-extrabold text-red-500 shadow-xl transition-all duration-75 {isChecked
 								? 'border-red-500 outline outline-red-500'
 								: 'border-gray-400'}"
 						>
