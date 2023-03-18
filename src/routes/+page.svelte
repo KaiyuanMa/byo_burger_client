@@ -50,6 +50,9 @@
 	const handleAddToBag = () => {
 		let dummy = bag;
 		let id = bag.length + 1;
+		if (!burger['cheese']) {
+			delete burger.cheese;
+		}
 		for (let i = 0; i < quantity; i++) {
 			dummy.push({ id: `burger-${id}`, ...burger });
 			id++;
@@ -72,8 +75,9 @@
 		const promises = bag.map(async (burger) => {
 			try {
 				const response = await apiPostBurgers(burger);
+				console.log(response);
 			} catch (error) {
-				console.error(`POST request for item ${item} failed:`, error.message);
+				console.log(error);
 			}
 		});
 
