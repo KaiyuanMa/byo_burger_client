@@ -3,11 +3,13 @@
 	import { apiGetIngredients, apiPostBurgers } from '../api';
 	import IngredientSelect from '../components/IngredientSelect.svelte';
 	import SideBar from '../components/SideBar.svelte';
+	import OrderModal from '../components/orderModal.svelte';
 	let ingredients = {};
 	let reset = false;
 	let bag = [];
 	let quantity = 1;
 	let isBagHidden = true;
+	let isModalVisible = false;
 	//Copy all keys to burger for later verification before submit
 	$: burger = Object.keys(ingredients).reduce((acc, key) => {
 		if (key === 'toppings' || key === 'sauces') {
@@ -82,12 +84,14 @@
 		});
 
 		await Promise.all(promises);
+		isModalVisible = true;
 		console.log('All POST requests have been completed.');
 		bag = [];
 	};
 </script>
 
 <div class="bg-gray-100 pb-20">
+	<OrderModal bind:isModalVisible />
 	<header
 		class="relative flex h-20 items-center justify-center bg-white text-4xl font-extrabold text-red-600"
 	>
@@ -113,7 +117,7 @@
 			/>
 		{/each}
 	</div>
-	<div class="fixed bottom-0 z-50 flex h-20 w-full items-center justify-around border-t bg-white">
+	<div class="fixed bottom-0 z-40 flex h-20 w-full items-center justify-around border-t bg-white">
 		<div class="flex items-center justify-center gap-10 text-lg font-bold">
 			QUANTITY <button
 				on:click={() => quantity--}
