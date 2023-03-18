@@ -93,9 +93,7 @@
 			><i class="fa-sharp fa-regular fa-bag-shopping" />
 		</button>
 	</header>
-	<h1
-		class="flex h-72 h-20 items-center justify-center bg-red-600 text-6xl font-extrabold text-white"
-	>
+	<h1 class="flex h-72 items-center justify-center bg-red-600 text-6xl font-extrabold text-white">
 		BUILD YOUR OWN
 	</h1>
 	<div class="bg-gray-100">
@@ -133,7 +131,7 @@
 			on:click={handleAddToBag}
 			class="border-2 border-red-600 bg-red-600 p-2 px-9 
 			text-base font-bold text-white transition-all duration-200 hover:bg-white hover:text-red-600 disabled:pointer-events-none 
-			disabled:border-gray-300 disabled:bg-gray-300 disabled:bg-gray-300"
+			disabled:border-gray-300 disabled:bg-gray-300"
 			disabled={!burger.bun || !burger.patty}>ADD TO BAG</button
 		>
 	</div>
