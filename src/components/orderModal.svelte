@@ -6,6 +6,7 @@
 </script>
 
 {#if isModalVisible}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="fixed z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
 		on:click={close}
