@@ -9,7 +9,11 @@
 	let ingredientType = 'checkBox';
 </script>
 
-<div class="mx-auto flex w-200 flex-col justify-start pt-10">
+<div
+	class="mx-auto flex w-200 flex-col justify-start pt-10"
+	data-testid="check-group"
+	id={`${ingredientType}-group`}
+>
 	<IngredientHeader {ingredientType} {isOptional} {ingredientOptions} />
 	<div class="align-center flex w-full flex-wrap justify-start">
 		{#each ingredientOptions as name}

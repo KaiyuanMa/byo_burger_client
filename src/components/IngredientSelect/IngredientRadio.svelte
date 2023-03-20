@@ -19,7 +19,11 @@
 
 <div class="mx-auto flex w-200 flex-col justify-start pt-10">
 	<IngredientHeader {ingredientType} {isOptional} {ingredientOptions} />
-	<div class="align-center flex w-full flex-wrap justify-start">
+	<div
+		class="align-center flex w-full flex-wrap justify-start"
+		data-testid="radio-group"
+		id={`${ingredientType}-group`}
+	>
 		{#each ingredientOptions as name, index}
 			<div class="h-40 w-1/4 p-2">
 				<label
