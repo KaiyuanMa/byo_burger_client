@@ -3,13 +3,20 @@
 	export let handleRemoveFromBag;
 </script>
 
-<div class="mx-3 flex flex-col border-2 p-2">
+<div
+	class="mx-3 flex flex-col border-2 p-2"
+	data-test={burger.id + '-side-bar-item'}
+>
 	<div class="flex items-center justify-between">
 		<h1 class="text-lg font-bold text-red-500">
 			{burger.id.replaceAll('-', ' ').toUpperCase()}
 		</h1>
-		<button on:click={() => handleRemoveFromBag(burger.id)}
-			><i class="fa-solid fa-trash p-1 transition-all hover:text-red-500" /></button
+		<button
+			on:click={() => handleRemoveFromBag(burger.id)}
+			data-test={burger.id + '-remove-burger-btn'}
+			><i
+				class="fa-solid fa-trash p-1 transition-all hover:text-red-500"
+			/></button
 		>
 	</div>
 

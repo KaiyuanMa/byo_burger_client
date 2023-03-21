@@ -23,7 +23,9 @@
 						type="checkbox"
 						class="h-0 w-0"
 						bind:group={selectedIngredient}
-						on:change={() => saveBurgerToLocalStorage(selectedIngredient)}
+						on:change={() => {
+							saveBurgerToLocalStorage();
+						}}
 						value={name}
 					/>
 					<div
@@ -32,6 +34,7 @@
                 {selectedIngredient.includes(name)
 							? 'border-red-500 outline outline-red-500'
 							: 'border-gray-400'}"
+						data-test={`${ingredientType}-${name}`}
 					>
 						{name.replaceAll('_', ' ').toUpperCase()}
 						<i

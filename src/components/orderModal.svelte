@@ -6,10 +6,10 @@
 </script>
 
 {#if isModalVisible}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="fixed z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
 		on:click={close}
+		data-test={'order-modal'}
 	>
 		<div
 			class="relative flex h-20 w-1/3 items-center justify-center rounded-md border-2  bg-white"
@@ -20,6 +20,7 @@
 			</p>
 			<button
 				class="bg absolute top-2 right-4 text-lg transition-all hover:text-red-500"
+				data-test={'order-modal-close-btn'}
 				on:click={close}><i class="fa-regular fa-circle-xmark" /></button
 			>
 		</div>

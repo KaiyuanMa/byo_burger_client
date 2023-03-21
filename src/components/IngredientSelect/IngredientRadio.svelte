@@ -14,6 +14,7 @@
 		} else {
 			selectedIngredient = name;
 		}
+		saveBurgerToLocalStorage();
 	}
 </script>
 
@@ -35,7 +36,7 @@
 						type="radio"
 						bind:group={selectedIngredient}
 						on:click={() => toggleRadioButton(name)}
-						on:change={() => saveBurgerToLocalStorage(selectedIngredient)}
+						on:change={() => saveBurgerToLocalStorage()}
 						value={name}
 					/>
 					<div
@@ -44,6 +45,7 @@
 						name
 							? 'border-red-500 outline outline-red-500'
 							: 'border-gray-400'}"
+						data-test={`${ingredientType}-${name}`}
 					>
 						{name.replaceAll('_', ' ').toUpperCase()}
 						<i

@@ -15,7 +15,7 @@
 	let isModalVisible = false;
 	let burger = {};
 
-	function saveBurgerToLocalStorage(IngredientType, selectedIngredient) {
+	function saveBurgerToLocalStorage() {
 		localStorage.setItem('burger', JSON.stringify(burger));
 	}
 
