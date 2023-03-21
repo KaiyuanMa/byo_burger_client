@@ -20,7 +20,6 @@
 	}
 
 	onMount(async () => {
-		console.log('mounting');
 		await fetchIngredients();
 		const storeBurger = localStorage.getItem('burger');
 		const storeBag = localStorage.getItem('bag');
@@ -75,9 +74,17 @@
 		if (!burger['cheese']) {
 			delete burger.cheese;
 		}
-		for (let i = 0; i < quantity; i++) {
-			dummy.push({ id: `burger-${id}`, ...burger });
-			id++;
+		if (dummy.length <= 0) {
+			for (let i = 0; i < quantity; i++) {
+				dummy.push({ id: `burger-${id}`, ...burger });
+				id++;
+			}
+		} else {
+			let nextId = dummy[dummy.length - 1].id.split('-')[1];
+			for (let i = 0; i < quantity; i++) {
+				nextId++;
+				dummy.push({ id: `burger-${nextId}`, ...burger });
+			}
 		}
 		bag = dummy;
 		ingredients = ingredients;
